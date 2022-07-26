@@ -4,5 +4,5 @@ A very simple chess game written in python. The Gui is written with the help of 
 --------------------------------------
 To Use: 
 1. `git clone https://github.com/smhcpp/PyQtChess`
-2. cd PyQtChess
-3. python ChessGui.py
+2. `cd PyQtChess`
+3. `python ChessGui.py`
