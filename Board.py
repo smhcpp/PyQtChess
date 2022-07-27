@@ -7,6 +7,8 @@ class Board:
   kingpositions=dict()
   #castlingrights=[[True,True],[True,True]]
   #ischecked=[False,False]
+  enpassantready=None
+  #enpassantto=None
   movesnumber=0
 
   def __init__(self):
@@ -119,17 +121,27 @@ class Board:
       4: TODO: a draw by repetition of moves
       10: promotion
       11: castling
-      12: TODO: enpassant
+      12: enpassant
       404: ilegal move!
     """
     #if self.isForcedDraw():
     #  return 3
+    enpassantflag=False
     piece=self.pieces[frompos]
     cond1= topos[0] in range(8) and topos[1] in range(8)
     cond2= piece.pcolor==self.movesnumber%2
     if cond1 and cond2:
       pmoves=piece.getAvailableMoves(self.pieces)
+      if piece.ptype==0 and self.enpassantready!=None:
+        #make enpassant a possible move
+        cond01=abs(frompos[0]-self.enpassantready[0])==1 and frompos[1]==self.enpassantready[1]
+        cond02=topos[0]==self.enpassantready[0] and topos[1]==self.enpassantready[1]+(-1)**(piece.pcolor+1)
+        if cond01 and cond02:
+          pmoves.append(topos)
+          enpassantflag=True
       if topos in pmoves:
+        enpassantready_temp=self.enpassantready
+        self.enpassantready=None
         if self.islegal(frompos,topos):
           self.movesnumber+=1
           #maybe self.pieces.pop(topos)!!!
@@ -137,6 +149,11 @@ class Board:
           self.pieces[topos].move(topos)
           self.pieces.pop(frompos)
           if self.pieces[topos].ptype==0:
+            if enpassantflag:
+              self.pieces.pop(enpassantready_temp)
+              return 12
+            if abs(topos[1]-frompos[1])==2:
+              self.enpassantready=topos
             if self.pieces[topos].position[1]==7-yposothers[self.pieces[topos].pcolor]:
               return 10
           elif self.pieces[topos].ptype==5:
@@ -188,18 +205,7 @@ class Board:
           self.board.pieces[enpassantover].close()
           del self.board.pieces[enpassantover]
           del self.board.pieces[enpassantover]
-
-  #king part:
-  if obj.ptype==5:
-      self.board.castlingrights[obj.pcolor]=[False,False]
-      self.board.kingpos[obj.pcolor]=topos
-      #castling part:
-      if abs(topos[0]-self.selectedlabelpos[0])==2:
-          side=floor(topos[0]/4) # 0: queensdie and 1: kingside
-          rpos=(side*7,self.board.yposothers[obj.pcolor])
-          rposnew=(side*7+2*(-1)**side,self.board.yposothers[obj.pcolor])
-          self.makemove(rpos, rposnew)
-    """
+  """
 
   def __str__(self):
     buffer=""

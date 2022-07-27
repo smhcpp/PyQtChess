@@ -6,7 +6,8 @@ A very simple chess game written in python. The Gui is written with the help of 
 TODO:
 1. a check mate! (find who is mated by movenumber)
 2. a Stalemate! (find who stalemated by movenumber)
-3. enpassant
+3. probably a better UI
+
 
 --------------------------------------
 

@@ -175,7 +175,8 @@ class ChessGui(QWidget):
                 obj=self.labels[self.selectedlabelpos]
                 piece=self.board.pieces[self.selectedlabelpos]
                 if obj.__mousePressPos is not None:
-                    moved = event.globalPos() - obj.__mousePressPos
+                    #moved = event.globalPos() - obj.__mousePressPos
+                    enpassantready_temp=self.board.enpassantready
                     moveresponse=self.board.move(self.selectedlabelpos,topos)
                     """ 
                         moveresponse:
@@ -206,6 +207,9 @@ class ChessGui(QWidget):
                             rooktox=topos[0]+(-1)**side
                             self.moveLabel((side*7,topos[1]),(rooktox,topos[1]),piece.ptype)
                             self.labels.pop((side*7,topos[1]))
+                        elif moveresponse==12:
+                            self.labels[enpassantready_temp].close()
+                            self.labels.pop(enpassantready_temp)
                         else:
                             if topos in self.labels:
                                 self.labels[topos].close()
