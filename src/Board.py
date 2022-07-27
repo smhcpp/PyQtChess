@@ -1,5 +1,5 @@
-from Utilities import *
-from Piece import *
+from src.Utilities import *
+from src.Piece import *
 from math import floor
 
 class Board:

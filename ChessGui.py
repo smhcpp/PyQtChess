@@ -16,7 +16,7 @@ from PySide2.QtUiTools import QUiLoader
 from PySide2.QtGui import *
 from PySide2.QtCore import *
 from math import floor
-from Board import *
+from src.Board import *
 
 icons=[["pics/wpawn.png","pics/bpawn.png"],
         ["pics/wknight.png","pics/bknight.png"],

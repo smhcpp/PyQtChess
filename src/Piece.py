@@ -1,4 +1,4 @@
-from Utilities import *
+from src.Utilities import *
 
 class Piece:
   """
