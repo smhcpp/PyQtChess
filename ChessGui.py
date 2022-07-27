@@ -42,7 +42,6 @@ class PromotionWindow(QWidget):
             for i in range(4):
                 if x>=i*squaresize+(i+1)*self.gap and x<=(i+1)*squaresize +(i+1)*self.gap:
                     self.selectedPType=i+1
-                    #print(self.selectedPType)
                     self.mwin.promotionReactivate(self.selectedPType)
                     self.close()
 
@@ -52,16 +51,13 @@ class PromotionWindow(QWidget):
         self.buttons=[]
         for ptype in range(1,5):
             b=QLabel(self)
-            #icon = QIcon()
             i=ptype-1
             b.setStyleSheet("border: 1px solid black;")
             b.setGeometry(QRect(self.gap*ptype+squaresize*i,self.gap , squaresize, squaresize))
             b.setPixmap(icons[ptype][self.pcolor])#(icon)
             b.setScaledContents(True)
-            #b.setText(str(ptype))
-            
             self.buttons.append(b)
-            #b.clicked.connect( lambda: self.clickedAction( self.buttons[i].x() ))
+
     
 class ChessGui(QWidget):
     #TODO: load these settings from a yaml file
@@ -111,14 +107,14 @@ class ChessGui(QWidget):
             x=self.boardx-30
             y=self.boardy+n*squaresize+squaresize/2-10
             q=QLabel(self)
-            q.setText(str(n))
+            q.setText(str(8-n))
             q.setGeometry(QRect(x,y , 20, 20))
 
         for n in range(8):
             x=self.boardx+n*squaresize+squaresize/2-5
             y=self.boardy+8*squaresize+10
             q=QLabel(self)
-            q.setText(str(n))
+            q.setText(columnnames[n])
             q.setGeometry(QRect(x,y , 20, 20))
 
     def paintEvent(self, e):
@@ -233,7 +229,7 @@ class ChessGui(QWidget):
         y=self.evalPosition(self.boardy, topos[1], ptype)
         self.labels[frompos].move(x,y)
         self.labels[topos]=self.labels[frompos]
-        #del self.labels[frompos]
+
     def promotionReactivate(self,ptype):
         pcolor=self.board.pieces[self.promotionpos[1]].pcolor
         newl=QLabel(self)

@@ -32,11 +32,9 @@ class Piece:
     pass
   
   def fakemove(self,topos):
-    #print("From "+str(self.position)+" to "+str(topos))
     self.position=topos
 
   def move(self,topos):
-    #print("From "+str(self.position)+" to "+str(topos))
     self.position=topos
 
 class Pawn(Piece):
@@ -58,14 +56,6 @@ class Pawn(Piece):
       nkey=nkey=(self.position[0],k)
       if self.position[1]==6-self.pcolor*5 and not nkey in pieces:
         pmoves.append(nkey)
-
-    # enpassant:
-    
-    #if self.enpassant!=None:
-    #  if self.position[0] in [self.enpassant[0]+1,self.enpassant[0]-1] and self.position[1]==self.enpassant[1]:
-    #    pmoves.append((self.enpassant[0],j))
-        
-        #  self.enpassantto=(self.enpassant[0],j)
 
     # taking:
     for r in [-1,1]:
@@ -146,7 +136,6 @@ class King(Piece):
   def move(self,topos):
     self.position=topos
     self.castlingright=False
-
 
   def getAvailableAttacks(self, pieces):
     return getKingAttacks(pieces, self)
